@@ -248,6 +248,12 @@ MonoBehaviour:
   - {fileID: -1315222528397024527, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
   - {fileID: 9190952838488770117, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
   - {fileID: 1499117567478527754, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
+  itemSprites:
+  - {fileID: -8941502657674989111, guid: e7ffaf001ae4a7e408148dcb1faf44e2, type: 3}
+  - {fileID: 21300000, guid: 3c1ac4175b390564f9002003654a31cc, type: 3}
+  - {fileID: 21300000, guid: e64ac788ac783584db0530c6cdd7612c, type: 3}
+  - {fileID: 21300000, guid: 3bc556d55f217a743a9506652167391a, type: 3}
+  - {fileID: 21300000, guid: 24889f8e09aaae94a9c3d6ea75bda311, type: 3}
   lifeText: {fileID: 1300344669}
   levelText: {fileID: 1504083978}
   startText: {fileID: 1443748259}
@@ -255,6 +261,7 @@ MonoBehaviour:
   loseText: {fileID: 1645145938}
   brickPrefab: {fileID: 3524194173827126318, guid: 5b406411d43e58647bbb5647f46b50de, type: 3}
   hitAudio: {fileID: 1799129445}
+  itemPrefab: {fileID: 6640150105689416732, guid: f5d3741353c7a114690c7da9798c052b, type: 3}
 --- !u!4 &909501781
 Transform:
   m_ObjectHideFlags: 0
@@ -1311,6 +1318,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 3002243620384692082, guid: 0ce249b67d207f64a92d81244b121501, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002243620384692086, guid: 0ce249b67d207f64a92d81244b121501, type: 3}
+      propertyPath: speed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ce249b67d207f64a92d81244b121501, type: 3}
 --- !u!1001 &3319013779659954687
@@ -1320,6 +1335,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3319013780689178178, guid: 325ecf384edf1c342b40ba25e977eeb0, type: 3}
+      propertyPath: xMax
+      value: 3.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319013780689178178, guid: 325ecf384edf1c342b40ba25e977eeb0, type: 3}
+      propertyPath: xMin
+      value: -3.75
+      objectReference: {fileID: 0}
     - target: {fileID: 3319013780689178179, guid: 325ecf384edf1c342b40ba25e977eeb0, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1366,6 +1389,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3319013780689178181, guid: 325ecf384edf1c342b40ba25e977eeb0, type: 3}
       propertyPath: m_Name
+      value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319013780689178181, guid: 325ecf384edf1c342b40ba25e977eeb0, type: 3}
+      propertyPath: m_TagString
       value: Paddle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
