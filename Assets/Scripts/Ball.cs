@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour{
     private void Awake(){
         _rb = GetComponent<Rigidbody2D>();
         _initPos = transform.position;
+        currentSpeed = speed;
     }
 
     private void Start() {
@@ -37,7 +38,7 @@ public class Ball : MonoBehaviour{
 
             // 生成随机一个方向
             Vector2 velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(0.5f, 1f)).normalized;
-            _rb.velocity = velocity * speed;
+            _rb.velocity = velocity * currentSpeed;
 
             // 关闭开始游戏的文本
             GameManager.Instance.CloseStartText();
@@ -45,8 +46,7 @@ public class Ball : MonoBehaviour{
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if (!GameManager.Instance.isPlaying)
-        {
+        if (!GameManager.Instance.isPlaying) {
             return;
         }
 
@@ -86,7 +86,7 @@ public class Ball : MonoBehaviour{
             sp = newVelocity;
         }
 
-        _rb.velocity = sp * speed;
+        _rb.velocity = sp * currentSpeed;
     }
 
     // 重置球的位置

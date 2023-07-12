@@ -248,6 +248,12 @@ MonoBehaviour:
   - {fileID: -1315222528397024527, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
   - {fileID: 9190952838488770117, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
   - {fileID: 1499117567478527754, guid: 4fc7c7eed2014a248970648543ecdc96, type: 3}
+  itemSprites:
+  - {fileID: -8941502657674989111, guid: e7ffaf001ae4a7e408148dcb1faf44e2, type: 3}
+  - {fileID: 21300000, guid: 3c1ac4175b390564f9002003654a31cc, type: 3}
+  - {fileID: 21300000, guid: e64ac788ac783584db0530c6cdd7612c, type: 3}
+  - {fileID: 21300000, guid: 3bc556d55f217a743a9506652167391a, type: 3}
+  - {fileID: 21300000, guid: 24889f8e09aaae94a9c3d6ea75bda311, type: 3}
   lifeText: {fileID: 1300344669}
   levelText: {fileID: 1504083978}
   startText: {fileID: 1443748259}

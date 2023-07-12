@@ -50,6 +50,7 @@ public class Item : MonoBehaviour
     public void SetItemTypeAndItemSprite(ItemType itemType) {
         _itemType = itemType;
         // 设置图案
+        GetComponent<SpriteRenderer>().sprite = GameManager.Instance.itemSprites[(int)_itemType];
     }
 }
 

@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour{
     private List<Brick> _bricks = new List<Brick>();
     
     // 道具有效时间
-    private const float ItemValidTime = 2f;
+    private const float ItemValidTime = 3f;
     // 道具效果检测相关
     private int _currentBallItemCount;
     private int _currentPaddleItemCount;
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour{
     public bool isLost;
     
     public Sprite[] brickSprites;
+    public Sprite[] itemSprites;
     public Text lifeText;
     public Text levelText;
     public GameObject startText;
