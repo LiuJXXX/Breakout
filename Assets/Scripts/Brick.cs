@@ -13,13 +13,13 @@ public class Brick : MonoBehaviour{
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start() {
+    private void OnEnable() {
         Init(GameManager.Level);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         // 播放音效
-        hitAudio.Play();
+        GameManager.Instance.PlayHitAudio();
 
         // 被击中时，砖块血量减1
         _health--;
@@ -29,17 +29,18 @@ public class Brick : MonoBehaviour{
             return;
         }
 
-        // 砖块血量为0时消失
+        // 砖块血量为0时消失，将其设为false
         GameManager.Instance.brickNum--;
         GameManager.Instance.CheckPassed();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
         // 播放爆炸动画特效
         Instantiate(breakingAnimation, transform.position, Quaternion.identity);
     }
 
     // 根据level初始化砖块的血量和图案
-    public void Init(int level){
+    private void Init(int level) {
+        _health = 1;
         int brickSpritesLength = GameManager.Instance.brickSprites.Length;
 
         for(int i = 1; i < level; ++i){

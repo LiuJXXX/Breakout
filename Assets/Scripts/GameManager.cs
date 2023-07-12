@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -14,10 +15,22 @@ public class GameManager : MonoBehaviour{
     // 慢动作
     private const float SlowMotionRate = 0.2f;
     private const float SlowMotionTime = 0.2f;
-    // 关卡数
-    public static int Level = 1;
+    // 砖块的坐标数组
+    private static float[,] _bricksPos =
+    {
+        {-2.5f, 3.5f}, {-1.25f, 3.5f}, {0f, 3.5f}, {1.25f, 3.5f}, {2.5f, 3.5f},
+        {-2.5f, 3f}, {-1.25f, 3f}, {0f, 3f}, {1.25f, 3f}, {2.5f, 3f},
+        {-2.5f, 2.5f}, {-1.25f, 2.5f}, {0f, 2.5f}, {1.25f, 2.5f}, {2.5f, 2.5f}
+    };
+    // 砖块数组
+    private List<Brick> _bricks = new List<Brick>();
+    
+    public Ball ball;
+    public Paddle paddle;
     // 当前砖块数
     public int brickNum;
+    // 关卡数
+    public static int Level = 1;
     // 记录游戏状态
     public bool isPlaying;
     public bool isPassed;
@@ -29,6 +42,9 @@ public class GameManager : MonoBehaviour{
     public GameObject startText;
     public GameObject winText;
     public GameObject loseText;
+    public GameObject brickPrefab;
+    public AudioSource hitAudio;
+    private GameObject _bricksParent;
     
     private void Awake() {
         if(_instance != null){
@@ -41,7 +57,9 @@ public class GameManager : MonoBehaviour{
 
     private void Start(){
 
-        brickNum = FindObjectsOfType<Brick>().Length;
+        // 生成砖块的父节点
+        _bricksParent = new GameObject("Bricks");
+        _bricksParent.transform.position = Vector3.zero;
 
         // 初始化
         Init();
@@ -51,7 +69,8 @@ public class GameManager : MonoBehaviour{
         // 通关或者失败重新加载场景
         if(isPassed || isLost){
             if(Input.GetKeyDown(KeyCode.N)){
-                ReloadScene();
+                // ReloadScene();
+                Init();
             }
         }
     }
@@ -74,6 +93,33 @@ public class GameManager : MonoBehaviour{
 
         // 设置关卡文本
         SetLevelText();
+        
+        // 提示文本
+        startText.SetActive(true);
+        winText.SetActive(false);
+        loseText.SetActive(false);
+        
+        // 初始化小球和平板
+        ball.ResetPos();
+        paddle.ResetPos();
+
+        // 初始化砖块
+        if (_bricks.Count == 0) {
+            brickNum = _bricksPos.Length / 2;
+            for (int i = 0; i < brickNum; ++i) {
+                GameObject brick = Instantiate(brickPrefab, new Vector3(_bricksPos[i, 0], _bricksPos[i, 1]), Quaternion.identity);
+                brick.transform.SetParent(_bricksParent.transform);
+                _bricks.Add(brick.GetComponent<Brick>());
+            }
+        }
+        else {
+            brickNum = _bricks.Count;
+            foreach (var brick in _bricks) {
+                // 游戏失败时，如果不先关闭它们，有的砖块不会被重置
+                brick.gameObject.SetActive(false);
+                brick.gameObject.SetActive(true);
+            }
+        }
     }
 
     // 设置关卡文本
@@ -136,5 +182,10 @@ public class GameManager : MonoBehaviour{
     private void ReloadScene(){
         string sceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
+    }
+    
+    // 播放音效
+    public void PlayHitAudio() {
+        hitAudio.Play();
     }
 }

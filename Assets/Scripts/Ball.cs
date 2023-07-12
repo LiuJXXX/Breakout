@@ -11,10 +11,10 @@ public class Ball : MonoBehaviour{
 
     private void Awake(){
         _rb = GetComponent<Rigidbody2D>();
+        _initPos = transform.position;
     }
 
     private void Start() {
-        _initPos = transform.position;
         _paddleTransform = FindObjectOfType<Paddle>().transform;
     }
 
@@ -76,5 +76,10 @@ public class Ball : MonoBehaviour{
 
             _rb.velocity = sp * speed;
         }
+    }
+    
+    // 重置球的位置
+    public void ResetPos() {
+        transform.position = _initPos;
     }
 }
