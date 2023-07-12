@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour{
     private Vector3 _initPos;
 
     public float speed = 1;
+    public float currentSpeed = 1;
 
     private void Awake(){
         _rb = GetComponent<Rigidbody2D>();
@@ -81,5 +82,13 @@ public class Ball : MonoBehaviour{
     // 重置球的位置
     public void ResetPos() {
         transform.position = _initPos;
+    }
+    
+    // 改变球的速度
+    public void SetSpeed(float speedRate = 1.0f) {
+        currentSpeed = speed * speedRate;
+        // 需要直接修改刚体的速度，否则只有在下次反弹才会改变速度
+        Vector2 sp = _rb.velocity.normalized;
+        _rb.velocity = sp * currentSpeed;
     }
 }

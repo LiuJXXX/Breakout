@@ -29,4 +29,9 @@ public class Paddle : MonoBehaviour{
     public void ResetPos() {
         transform.position = _initPos;
     }
+    
+    // 改变平板的大小
+    public void SetLength(float lengthRate = 1.0f) {
+        transform.localScale = new Vector3(lengthRate, 1.0f, 1.0f);
+    }
 }
