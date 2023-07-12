@@ -4,17 +4,17 @@ using UnityEngine;
 public class Brick : MonoBehaviour{
 
     private const float AddHealthProb = 0.1f;
-    private int health = 1;
-    private SpriteRenderer spriteRenderer;
+    private int _health = 1;
+    private SpriteRenderer _spriteRenderer;
     public GameObject breakingAnimation;
     public AudioSource hitAudio;
 
     private void Awake() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start() {
-        Init(GameManager.level);
+        Init(GameManager.Level);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -22,10 +22,10 @@ public class Brick : MonoBehaviour{
         hitAudio.Play();
 
         // 被击中时，砖块血量减1
-        health--;
+        _health--;
         // 砖块剩余血量大于0，变更砖块颜色
-        if(health > 0){
-            spriteRenderer.sprite = GameManager.Instance.brickSprites[health - 1];
+        if(_health > 0){
+            _spriteRenderer.sprite = GameManager.Instance.brickSprites[_health - 1];
             return;
         }
 
@@ -44,10 +44,10 @@ public class Brick : MonoBehaviour{
 
         for(int i = 1; i < level; ++i){
             if(UnityEngine.Random.Range(0f, 1f) <= AddHealthProb){
-                health = Math.Min(health + 1, brickSpritesLength);
+                _health = Math.Min(_health + 1, brickSpritesLength);
             }
         }
 
-        spriteRenderer.sprite = GameManager.Instance.brickSprites[health - 1];
+        _spriteRenderer.sprite = GameManager.Instance.brickSprites[_health - 1];
     }
 }

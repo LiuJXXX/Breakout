@@ -5,20 +5,23 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour{
 
     // 单例模式
-    private static GameManager instance;
-    public static GameManager Instance {get {return instance;}}
+    private static GameManager _instance;
+    public static GameManager Instance {get {return _instance;}}
 
     // 初始生命值和当前生命值
     private const int InitLives = 3;
-    private int lives = InitLives;
+    private int _lives = InitLives;
+    // 慢动作
+    private const float SlowMotionRate = 0.2f;
+    private const float SlowMotionTime = 0.2f;
     // 关卡数
-    public static int level = 1;
+    public static int Level = 1;
     // 当前砖块数
     public int brickNum;
     // 记录游戏状态
-    public bool isPlaying = false;
-    public bool isPassed = false;
-    public bool isLosed = false;
+    public bool isPlaying;
+    public bool isPassed;
+    public bool isLost;
     
     public Sprite[] brickSprites;
     public Text lifeText;
@@ -28,11 +31,11 @@ public class GameManager : MonoBehaviour{
     public GameObject loseText;
     
     private void Awake() {
-        if(instance != null){
+        if(_instance != null){
             Destroy(gameObject);
         }
         else{
-            instance = this;
+            _instance = this;
         }
     }
 
@@ -46,7 +49,7 @@ public class GameManager : MonoBehaviour{
 
     private void Update() {
         // 通关或者失败重新加载场景
-        if(isPassed || isLosed){
+        if(isPassed || isLost){
             if(Input.GetKeyDown(KeyCode.N)){
                 ReloadScene();
             }
@@ -54,8 +57,8 @@ public class GameManager : MonoBehaviour{
     }
 
     private void OnDestroy() {
-        if(instance == this){
-            instance = null;
+        if(_instance == this){
+            _instance = null;
         }
     }
 
@@ -63,10 +66,10 @@ public class GameManager : MonoBehaviour{
         // 初始化游戏状态
         isPlaying = false;
         isPassed = false;
-        isLosed = false;
+        isLost = false;
 
         // 初始化血量并设置血量文本
-        lives = InitLives;
+        _lives = InitLives;
         SetLifeText();
 
         // 设置关卡文本
@@ -75,17 +78,17 @@ public class GameManager : MonoBehaviour{
 
     // 设置关卡文本
     private void SetLevelText(){
-        levelText.text = "关卡 " + level;
+        levelText.text = "关卡 " + Level;
     }
 
     // 设置血量文本
     private void SetLifeText(){
-        lifeText.text = "生命值：" + lives;
+        lifeText.text = "生命值：" + _lives;
     }
 
     // 改变生命值
     private void ChangeLives(int delta){
-        lives += delta;
+        _lives += delta;
         SetLifeText();
     }
 
@@ -100,13 +103,13 @@ public class GameManager : MonoBehaviour{
 
         // 生命值减1
         ChangeLives(-1);
-        if(lives == 0){
+        if(_lives == 0){
             // 失败提示
             loseText.SetActive(true);
 
             // 游戏失败，关卡置1
-            isLosed = true;
-            level = 1;
+            isLost = true;
+            Level = 1;
         }
     }
 
@@ -116,8 +119,8 @@ public class GameManager : MonoBehaviour{
             // 通关提示
             winText.SetActive(true);
             // 慢动作
-            Time.timeScale = 0.2f;
-            Invoke(nameof(WinStep), 0.2f);
+            Time.timeScale = SlowMotionRate;
+            Invoke(nameof(WinStep), SlowMotionTime);
         }
     }
 
@@ -126,7 +129,7 @@ public class GameManager : MonoBehaviour{
         Time.timeScale = 1f;
         isPlaying = false;
         isPassed = true;
-        level++;
+        Level++;
     }
 
     // 重新加载游戏界面
