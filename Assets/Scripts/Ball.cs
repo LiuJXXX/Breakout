@@ -45,40 +45,50 @@ public class Ball : MonoBehaviour{
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if(GameManager.Instance.isPlaying){
-            // 碰撞结束重置速度的大小
-            Vector2 sp = _rb.velocity.normalized;
-
-            // 对速度的方向进行约束，防止一直垂直或水平弹射
-            // 垂直弹射
-            if(sp.x == 0){
-                // 向左偏移
-                float tmpX = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
-                Vector2 newVelocity = new Vector2(-tmpX, 1f).normalized;
-                sp = newVelocity;
-            }
-            // 水平弹射
-            else if(sp.y == 0){
-                // 向下偏移
-                float tmpY = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
-                Vector2 newVelocity = new Vector2(1f, -tmpY).normalized;
-                sp = newVelocity;
-            }
-
-            // 弹射夹角大于80度或小于10度，计算向量与水平方向以及垂直方向组成的直角三角形是否有锐角小于10度
-            if(Mathf.Asin(Mathf.Abs(sp.y) / 1) * Mathf.Rad2Deg < BounceAngle || Mathf.Asin(Mathf.Abs(sp.x) / 1) * Mathf.Rad2Deg < BounceAngle){
-                // 将速度在水平方向和垂直方向上较小的分量增大至弹射夹角大于80度或小于10度
-                float tmp = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
-                float newX = Mathf.Sign(sp.x) * (Mathf.Abs(sp.x) > Mathf.Abs(sp.y) ? 1f : tmp);
-                float newY = Mathf.Sign(sp.y) * (Mathf.Abs(sp.y) > Mathf.Abs(sp.x) ? 1f : tmp);
-                Vector2 newVelocity = new Vector2(newX, newY).normalized;
-                sp = newVelocity;
-            }
-
-            _rb.velocity = sp * speed;
+        if (!GameManager.Instance.isPlaying)
+        {
+            return;
         }
+
+        // 碰到地板
+        if (other.gameObject.CompareTag("Floor")) {
+            GameManager.Instance.GameOver();
+            return;
+        }
+        
+        
+        // 碰撞结束重置速度的大小
+        Vector2 sp = _rb.velocity.normalized;
+
+        // 对速度的方向进行约束，防止一直垂直或水平弹射
+        // 垂直弹射
+        if(sp.x == 0){
+            // 向左偏移
+            float tmpX = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
+            Vector2 newVelocity = new Vector2(-tmpX, 1f).normalized;
+            sp = newVelocity;
+        }
+        // 水平弹射
+        else if(sp.y == 0){
+            // 向下偏移
+            float tmpY = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
+            Vector2 newVelocity = new Vector2(1f, -tmpY).normalized;
+            sp = newVelocity;
+        }
+
+        // 弹射夹角大于80度或小于10度，计算向量与水平方向以及垂直方向组成的直角三角形是否有锐角小于10度
+        if(Mathf.Asin(Mathf.Abs(sp.y) / 1) * Mathf.Rad2Deg < BounceAngle || Mathf.Asin(Mathf.Abs(sp.x) / 1) * Mathf.Rad2Deg < BounceAngle){
+            // 将速度在水平方向和垂直方向上较小的分量增大至弹射夹角大于80度或小于10度
+            float tmp = Mathf.Tan(BounceAngle * Mathf.Deg2Rad);
+            float newX = Mathf.Sign(sp.x) * (Mathf.Abs(sp.x) > Mathf.Abs(sp.y) ? 1f : tmp);
+            float newY = Mathf.Sign(sp.y) * (Mathf.Abs(sp.y) > Mathf.Abs(sp.x) ? 1f : tmp);
+            Vector2 newVelocity = new Vector2(newX, newY).normalized;
+            sp = newVelocity;
+        }
+
+        _rb.velocity = sp * speed;
     }
-    
+
     // 重置球的位置
     public void ResetPos() {
         transform.position = _initPos;
