@@ -11,7 +11,8 @@ public class Item : MonoBehaviour
 
     private void FixedUpdate() {
         Vector3 nextPos = transform.position;
-        nextPos.y -= Time.deltaTime * FallingSpeed;
+        // FixedUpdate中要使用Time.fixedDeltaTime
+        nextPos.y -= Time.fixedDeltaTime * FallingSpeed;
         transform.position = nextPos;
     }
 
@@ -52,9 +53,4 @@ public class Item : MonoBehaviour
         // 设置图案
         GetComponent<SpriteRenderer>().sprite = GameManager.Instance.itemSprites[(int)_itemType];
     }
-}
-
-public enum ItemType
-{
-    None, BallAcceleration, BallDeceleration, PaddleExtension, PaddleRetraction
 }

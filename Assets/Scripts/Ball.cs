@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour{
     private Rigidbody2D _rb;
     private Transform _paddleTransform;
     private Vector3 _initPos;
+    private Vector3 _nextPos;
 
     public float speed = 1;
     public float currentSpeed = 1;
@@ -13,6 +14,7 @@ public class Ball : MonoBehaviour{
     private void Awake(){
         _rb = GetComponent<Rigidbody2D>();
         _initPos = transform.position;
+        _nextPos = _initPos;
         currentSpeed = speed;
     }
 
@@ -23,7 +25,8 @@ public class Ball : MonoBehaviour{
     private void Update(){
         // 游戏未开始时，球要跟着板子移动
         if(!GameManager.Instance.isPlaying){
-            transform.position = new Vector3(_paddleTransform.position.x, _initPos.y);
+            _nextPos.x = _paddleTransform.position.x;
+            transform.position = _nextPos;
         }
 
         // 通关或者失败不允许弹出小球
