@@ -120,9 +120,6 @@ public class GameManager : MonoBehaviour{
         paddle.ResetPos();
         paddle.SetLength();
         _currentPaddleItemCount = 0;
-
-        // 关闭所有协程
-        StopAllCoroutines();
         
         // 清除所有道具
         ClearItems();
@@ -171,6 +168,13 @@ public class GameManager : MonoBehaviour{
     public void GameOver(){
         isPlaying = false;
 
+        // 重置板和小球的效果
+        ball.SetSpeed();
+        paddle.SetLength();
+        
+        // 清除所有道具
+        ClearItems();
+
         // 生命值减1
         ChangeLives(-1);
         if(_lives == 0){
@@ -188,6 +192,10 @@ public class GameManager : MonoBehaviour{
         if(brickNum == 0){
             // 通关提示
             winText.SetActive(true);
+
+            // 清除所有道具
+            ClearItems();
+
             // 慢动作
             Time.timeScale = SlowMotionRate;
             Invoke(nameof(WinStep), SlowMotionTime);
@@ -260,8 +268,15 @@ public class GameManager : MonoBehaviour{
         item.transform.SetParent(_itemsParent.transform);
     }
     
-    // 清除所有道具
+    // 清除所有道具和效果
     private void ClearItems() {
+        // 关闭所有协程，目前只有道具使用协程所以直接这么用了
+        StopAllCoroutines();
+
+        // 清除有效的道具个数
+        _currentPaddleItemCount = 0;
+        _currentBallItemCount = 0;
+
         foreach (Transform child in _itemsParent.transform) {
             Destroy(child.gameObject);
         }

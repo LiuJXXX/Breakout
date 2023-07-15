@@ -32,7 +32,6 @@ public class Brick : MonoBehaviour{
 
         // 砖块血量为0时消失，将其设为false
         GameManager.Instance.brickNum--;
-        GameManager.Instance.CheckPassed();
         gameObject.SetActive(false);
 
         // 生成道具
@@ -42,6 +41,9 @@ public class Brick : MonoBehaviour{
         
         // 播放爆炸动画特效
         Instantiate(breakingAnimation, transform.position, Quaternion.identity);
+
+        // 检查是否通关
+        GameManager.Instance.CheckPassed();
     }
 
     // 根据level初始化砖块的血量和图案

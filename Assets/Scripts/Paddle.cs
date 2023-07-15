@@ -14,15 +14,17 @@ public class Paddle : MonoBehaviour{
         _collider = GetComponent<Collider2D>();
     }
     
-    private void Update(){
+    // 使用FixedUpdate更新坐标
+    private void FixedUpdate(){
 
         // 读取输入
         float x = Input.GetAxisRaw("Horizontal");
         if(x != 0){
             Vector3 pos = transform.position;
-            pos.x += x * Time.deltaTime * speed;
+            pos.x += x * Time.fixedDeltaTime * speed;
             // 限制x坐标的大小
-            pos.x = Mathf.Clamp(pos.x, xMin + _collider.bounds.size.x / 2, xMax - _collider.bounds.size.x / 2);
+            var colliderBoundsSizeX = _collider.bounds.size.x;
+            pos.x = Mathf.Clamp(pos.x, xMin + colliderBoundsSizeX / 2, xMax - colliderBoundsSizeX / 2);
             transform.position = pos;
         }
     }
