@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    private const float FallingSpeed = 3f;
     private ItemType _itemType = ItemType.None;
     private const float BallAccelerationRate = 1.3f;
     private const float BallDecelerationRate = 0.7f;
     private const float PaddleExtensionRate = 1.5f;
     private const float PaddleRetractionRate = 0.8f;
-    private const float FallingSpeed = 3f;
+    private const int BallAttackIncreasedValue = 1;
 
     private void FixedUpdate() {
         Vector3 nextPos = transform.position;
@@ -36,6 +37,10 @@ public class Item : MonoBehaviour
                 case ItemType.PaddleRetraction:
                     GameManager.Instance.ChangePaddleLength(PaddleRetractionRate);
                     print("平板缩短");
+                    break;
+                case ItemType.BallAttackIncrease:
+                    GameManager.Instance.AddBallAttack(BallAttackIncreasedValue);
+                    print("小球攻击力增加");
                     break;
             }
             Destroy(gameObject);

@@ -3,19 +3,22 @@ using UnityEngine;
 public class Ball : MonoBehaviour{
     
     private const float BounceAngle = 10;
+    private const int InitAttack = 1;
     private Rigidbody2D _rb;
     private Transform _paddleTransform;
     private Vector3 _initPos;
     private Vector3 _nextPos;
 
     public float speed = 1;
-    public float currentSpeed = 1;
+    public float currentSpeed;
+    public int attack;
 
     private void Awake(){
         _rb = GetComponent<Rigidbody2D>();
         _initPos = transform.position;
         _nextPos = _initPos;
         currentSpeed = speed;
+        attack = InitAttack;
     }
 
     private void Start() {
@@ -93,15 +96,32 @@ public class Ball : MonoBehaviour{
     }
 
     // 重置球的位置
-    public void ResetPos() {
+    private void ResetPos() {
         transform.position = _initPos;
     }
     
-    // 改变球的速度
+    // 根据给定倍率设置球的速度
     public void SetSpeed(float speedRate = 1.0f) {
         currentSpeed = speed * speedRate;
         // 需要直接修改刚体的速度，否则只有在下次反弹才会改变速度
         Vector2 sp = _rb.velocity.normalized;
         _rb.velocity = sp * currentSpeed;
+    }
+
+    // 根据给定值增加球的攻击力
+    public void SetAttack(int increasedValue){
+        attack += increasedValue;
+    }
+
+    // 重置球的攻击力
+    public void ResetAttack(){
+        attack = InitAttack;
+    }
+
+    // 初始化小球的位置、速度和攻击力
+    public void ResetBall(){
+        ResetPos();
+        SetSpeed();
+        ResetAttack();
     }
 }

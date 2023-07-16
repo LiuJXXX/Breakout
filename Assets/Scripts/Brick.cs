@@ -22,8 +22,8 @@ public class Brick : MonoBehaviour{
         // 播放音效
         GameManager.Instance.PlayHitAudio();
 
-        // 被击中时，砖块血量减1
-        _health--;
+        // 被击中时，砖块血量减少小球攻击力的值
+        _health -= GameManager.Instance.GetBallAttack();
         // 砖块剩余血量大于0，变更砖块颜色
         if(_health > 0){
             _spriteRenderer.sprite = GameManager.Instance.brickSprites[_health - 1];
