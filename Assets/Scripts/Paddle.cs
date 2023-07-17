@@ -16,7 +16,6 @@ public class Paddle : MonoBehaviour{
     
     // 使用FixedUpdate更新坐标
     private void FixedUpdate(){
-
         // 读取输入
         float x = Input.GetAxisRaw("Horizontal");
         if(x != 0){

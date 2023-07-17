@@ -27,13 +27,15 @@ public class Ball : MonoBehaviour{
         _paddleTransform = FindObjectOfType<Paddle>().transform;
     }
 
-    private void Update(){
+    private void FixedUpdate() {
         // 游戏未开始时，球要跟着板子移动
         if(!GameManager.Instance.isPlaying){
             _nextPos.x = _paddleTransform.position.x;
             _rb.MovePosition(_nextPos);
         }
+    }
 
+    private void Update(){
         // 通关或者失败不允许弹出小球
         if(GameManager.Instance.isPassed || GameManager.Instance.isLost){
             return;
@@ -116,7 +118,7 @@ public class Ball : MonoBehaviour{
     }
 
     // 重置球的攻击力
-    public void ResetAttack(){
+    private void ResetAttack(){
         attack = InitAttack;
     }
     
