@@ -213,6 +213,8 @@ public class GameManager : MonoBehaviour{
         isPlaying = false;
         isPassed = true;
         Level++;
+        // 小球复位
+        ball.ResetRotate();
     }
 
     // 重新加载游戏界面
