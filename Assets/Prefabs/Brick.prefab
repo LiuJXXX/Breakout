@@ -93,7 +93,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3524194173827126318}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: af77b4d14ce6a084db9fa1ce723e5cf8, type: 2}
+  m_Material: {fileID: 6200000, guid: 15bc7f53148389141af7904527fc37b2, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -123,4 +123,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakingAnimation: {fileID: 6745201412749995302, guid: c77f114a25d6c0041a2847f4c299c793, type: 3}
-  hitAudio: {fileID: 0}

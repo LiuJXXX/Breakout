@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour{
 
         // 重置板和小球的效果
         ball.SetSpeed();
+        ball.ResetRotate();
         paddle.SetLength();
         
         // 清除所有道具
