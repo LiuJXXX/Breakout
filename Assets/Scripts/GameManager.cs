@@ -101,24 +101,13 @@ public class GameManager : MonoBehaviour{
         isPassed = false;
         isLost = false;
 
-        // 初始化血量并设置血量文本
-        _lives = InitLives;
-        SetLifeText();
-
-        // 设置关卡文本
-        SetLevelText();
-        
-        // 提示文本
-        startText.SetActive(true);
-        winText.SetActive(false);
-        loseText.SetActive(false);
+        // 初始化文本
+        InitText();
         
         // 初始化小球和平板
-        ball.ResetPos();
-        ball.SetSpeed();
+        ball.ResetBall();
         _currentBallItemCount = 0;
-        paddle.ResetPos();
-        paddle.SetLength();
+        paddle.ResetPaddle();
         _currentPaddleItemCount = 0;
         
         // 清除所有道具
@@ -164,12 +153,28 @@ public class GameManager : MonoBehaviour{
         startText.SetActive(false);
     }
 
+    // 初始化文本
+    private void InitText(){
+        // 初始化血量并设置血量文本
+        _lives = InitLives;
+        SetLifeText();
+
+        // 设置关卡文本
+        SetLevelText();
+        
+        // 提示文本
+        startText.SetActive(true);
+        winText.SetActive(false);
+        loseText.SetActive(false);
+    }
+
     // 未接到小球，生命值减1，游戏结束
     public void GameOver(){
         isPlaying = false;
 
         // 重置板和小球的效果
         ball.SetSpeed();
+        ball.ResetRotate();
         paddle.SetLength();
         
         // 清除所有道具
@@ -261,6 +266,16 @@ public class GameManager : MonoBehaviour{
         _currentPaddleItemCount--;
     }
     
+    // 增加球的攻击力
+    public void AddBallAttack(int increasedValue) {
+        ball.SetAttack(increasedValue);
+    }
+
+    // 获取小球的攻击力
+    public int GetBallAttack(){
+        return ball.attack;
+    }
+
     // 生成道具
     public void GenerateItem(ItemType itemType, Vector3 pos) {
         GameObject item = Instantiate(itemPrefab, pos, Quaternion.identity);

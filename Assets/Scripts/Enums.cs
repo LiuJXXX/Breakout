@@ -1,4 +1,4 @@
 public enum ItemType
 {
-    None, BallAcceleration, BallDeceleration, PaddleExtension, PaddleRetraction
+    None, BallAcceleration, BallDeceleration, PaddleExtension, PaddleRetraction, BallAttackIncrease
 }
